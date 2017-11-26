@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { View, Animated, Text } from "react-native";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions/start";
 
 import styles from "./styles";
 
-class Splash extends Component {
+class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +17,7 @@ class Splash extends Component {
   }
 
   componentDidMount() {
-    this.animations.bounceText.start(() => this.props.onFinishedSplash());
+    this.animations.bounceText.start(() => this.props.actions.finish_demo());
   }
 
   bootAnimation() {
@@ -39,15 +42,21 @@ class Splash extends Component {
     return (
       <View style={styles.body}>
         <Animated.Text style={[styles.text, { top: this.state.textAnim }]}>
-          Splash App
+          This is a Demo view or a road view
         </Animated.Text>
       </View>
     );
   }
 }
 
-Splash.propTypes = {
-  onFinishedSplash: PropTypes.func.isRequired
+Demo.propTypes = {
+  actions: PropTypes.shape({
+    finish_demo: PropTypes.func.isRequired
+  }).isRequired
 };
 
-export default Splash;
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(undefined, mapDispatchToProps)(Demo);

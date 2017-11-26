@@ -1,4 +1,6 @@
-const globalBlockingServiceProviders = [];
+import StateProvider from "../lib/state/state-provider";
+
+const globalBlockingServiceProviders = [StateProvider];
 const globalServiceProviders = [];
 
 export default class App {
@@ -8,11 +10,7 @@ export default class App {
   static bindings = {};
 
   static boot() {
-    // Con esto no salen cajas amarillas, pero si se imprime en la consola la
-    // la posible promesa rechazada
-    /* eslint no-console: 0 */
     console.ignoredYellowBox = [`Possible Unhandled Promise Rejection`];
-
     return Promise.all(
       globalBlockingServiceProviders.map(s => s.boot(App))
     ).then(() => {
@@ -36,11 +34,6 @@ export default class App {
     this.rootComponent.popSubComponent();
   }
 
-  /**
-   * Returns configurations from conf/conf.json
-   * It supports do notation, so you can.
-   * App.get('potato.size')
-   */
   static conf(key) {
     if (key.includes(".")) {
       let value = conf;
