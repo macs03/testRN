@@ -45,7 +45,7 @@ class Landing extends Component {
         <TouchableOpacity onPress={() => this.addToFavorite(item)}>
           <View>
             {this.state.favorite ? (
-              <Text>Favorite</Text>
+              <Text>**Favorite**</Text>
             ) : (
               <Text>Add to Fav</Text>
             )}
