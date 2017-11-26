@@ -16,6 +16,7 @@ import stylesApp from "../styles/app";
 import Splash from "./splash/splash";
 import Demo from "./demo/demo";
 import Landing from "./landing/landing";
+import Favorites from "./favorites/favorites";
 
 const renderComponentWithTabBar = (ComponentToRender, nameActive) => (
   <View style={stylesApp.renderRoute}>
@@ -72,7 +73,6 @@ export default class RootComponent extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props);
     if (
       this.firstRender &&
       !this.state.isBooting &&
@@ -105,6 +105,7 @@ export default class RootComponent extends Component {
               />
               <Route exact={true} path="/demo" component={Demo} />
               <Route exact={true} path="/landing" component={Landing} />
+              <Route exact={true} path="/favorites" component={Favorites} />
             </Switch>
           </AndroidBackButton>
         </NativeRouter>

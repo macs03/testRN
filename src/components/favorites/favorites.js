@@ -6,23 +6,12 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions/favorites";
 
-import data from "./data";
 import styles from "./styles";
 
 class Landing extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      favorite: false
-    };
-    this.addToFavorite = this.addToFavorite.bind(this);
-  }
-
-  addToFavorite(item) {
-    this.setState({
-      favorite: true
-    });
-    this.props.actions.add_to_favorites(item);
+    this.state = {};
   }
 
   renderItem(item) {
@@ -42,15 +31,9 @@ class Landing extends Component {
             <Text>{item.rank}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => this.addToFavorite(item)}>
-          <View>
-            {this.state.favorite ? (
-              <Text>Favorite</Text>
-            ) : (
-              <Text>Add to Fav</Text>
-            )}
-          </View>
-        </TouchableOpacity>
+        <View>
+          <Text>Favorite</Text>
+        </View>
       </View>
     );
   }
@@ -59,19 +42,19 @@ class Landing extends Component {
     return (
       <View style={styles.body}>
         <View>
-          <Text style={styles.text}>List of articles</Text>
+          <Text style={styles.text}>List of Favorites articles</Text>
           <Link
             style={styles.backCorridors}
-            to="/favorites"
+            to="/landing"
             activeOpacity={0.5}
             underlayColor={"transparent"}
           >
-            <Text style={styles.text}>go to favorites</Text>
+            <Text style={styles.text}>go back</Text>
           </Link>
         </View>
         <View style={{ marginTop: 24 }}>
           <FlatList
-            data={data}
+            data={this.props.favorites}
             renderItem={({ item }) => this.renderItem(item)}
             keyExtractor={item => item.id}
           />
@@ -86,8 +69,14 @@ class Landing extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    favorites: state.favorites.favorites
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(undefined, mapDispatchToProps)(Landing);
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

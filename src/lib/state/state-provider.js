@@ -8,7 +8,6 @@ import withInitialState from "./with-initial-state";
 
 export default class StateProvider {
   static boot(App) {
-    console.log("boot");
     let lastAppState = AppState.currentState;
     const handleAppStateChange = nextAppState => {
       if (
