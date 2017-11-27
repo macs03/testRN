@@ -7,51 +7,29 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/actions/favorites";
 
 import data from "./data";
+import Item from "./item";
 import styles from "./styles";
 
 class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorite: false
+      favorite: null
     };
     this.addToFavorite = this.addToFavorite.bind(this);
   }
 
   addToFavorite(item) {
-    this.setState({
-      favorite: true
-    });
     this.props.actions.add_to_favorites(item);
   }
 
   renderItem(item) {
     return (
-      <View style={styles.item}>
-        <View>
-          <View style={styles.row}>
-            <Text>Name: </Text>
-            <Text>{item.name}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text>Description: </Text>
-            <Text>{item.description}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text>Rank: </Text>
-            <Text>{item.rank}</Text>
-          </View>
-        </View>
-        <TouchableOpacity onPress={() => this.addToFavorite(item)}>
-          <View>
-            {this.state.favorite ? (
-              <Text>**Favorite**</Text>
-            ) : (
-              <Text>Add to Fav</Text>
-            )}
-          </View>
-        </TouchableOpacity>
-      </View>
+      <Item
+        item={item}
+        addToFavorite={this.addToFavorite}
+        favorite={this.state.favorite}
+      />
     );
   }
 
